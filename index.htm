@@ -11,28 +11,14 @@
             var jqxhr = $.get("https://localhost:5001/Wallpaper/GetInterval",
                 function (response) {
                     seconds = response * 1000;
-alert(seconds);
+//alert(seconds);
                 });
-				
+            changeimgandcackground();
 
 				//alert(seconds);
             setInterval(function () {
-                
-                var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImage",
-                    function (response) {
-
-                        // var img = document.getElementById("back").setAttribute("src", response);
-                        $("img").attr("src", response);
-                         
-
-                    });
-                var jqxhr2 = $.get("https://localhost:5001/Wallpaper/GetBackgroundColor",
-                    function (response) {
-                        // var img = document.getElementById("back").setAttribute("src", response);
-
-                        document.body.style.backgroundColor = response;
-                        bgcolor = response;
-						});
+                changeimgandcackground();
+    
                         
 
                          
@@ -45,6 +31,24 @@ alert(seconds);
 
 
         });
+        function changeimgandcackground() {
+
+            var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImage",
+                function (response) {
+
+                    // var img = document.getElementById("back").setAttribute("src", response);
+                    $("img").attr("src", response);
+
+
+                });
+            var jqxhr2 = $.get("https://localhost:5001/Wallpaper/GetBackgroundColor",
+                function (response) {
+                    // var img = document.getElementById("back").setAttribute("src", response);
+
+                    document.body.style.backgroundColor = response;
+                    bgcolor = response;
+                });
+        }
     </script>
     <style>
       /*  * {
