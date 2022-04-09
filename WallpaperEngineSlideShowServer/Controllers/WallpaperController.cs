@@ -24,10 +24,11 @@ namespace WallpaperEngineSlideShowServer.Controllers
                 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                 Console.WriteLine(ex.ToString()); return null;
+                
             }
 
 
@@ -38,27 +39,33 @@ namespace WallpaperEngineSlideShowServer.Controllers
             try
             {
                 string ap = null;
-                int i = 0;
-                var images = this.wallpaperManager.GetImages();
-                if (images != null)
-                {
-                    Random random = new Random();
-                    i = random.Next(images.Count);
-                    if (i == images.Count)
-                    {
-                        i = images.Count - 1;
-                    }
-                    ap = images[i];
-
-
-                }
+             
+                ap= this.wallpaperManager.GetImage();
+                
 
                 return new OkObjectResult(ap);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                 Console.WriteLine(ex.ToString()); return null;
+            }
+        }
+        public ActionResult GetImageData()
+        {
+            try
+            {
+                string ap = null;
+                int i = 0;
+              ap = this.wallpaperManager.GetImageData();
+               
+
+                return new OkObjectResult(ap);
+            }
+            catch (Exception ex)
+            {
+
+                 Console.WriteLine(ex.ToString()); return null;
             }
         }
         public ActionResult GetInterval()
@@ -72,10 +79,10 @@ namespace WallpaperEngineSlideShowServer.Controllers
 
                 return new OkObjectResult(ap);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                 Console.WriteLine(ex.ToString()); return null;
             }
         }
         public ActionResult GetBackgroundColor()
@@ -89,10 +96,10 @@ namespace WallpaperEngineSlideShowServer.Controllers
 
                 return new OkObjectResult(ap);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+               
+                 Console.WriteLine(ex.ToString()); return null;
             }
         }
 

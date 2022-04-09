@@ -41,7 +41,7 @@ namespace WallpaperEngineSlideShowServer
                 Init();
                 return config.GetValue<string>("ApppSettings:WallPaperPath");
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
 
                  
@@ -55,7 +55,7 @@ namespace WallpaperEngineSlideShowServer
                 Init();
                 return config.GetValue<int>("ApppSettings:Interval");
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
 
 
@@ -69,7 +69,7 @@ namespace WallpaperEngineSlideShowServer
                 Init();
                 return config.GetValue<string>("ApppSettings:Extentions");
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
 
 
@@ -83,7 +83,7 @@ namespace WallpaperEngineSlideShowServer
                 Init();
                 return config.GetValue<string>("ApppSettings:Background-Color");
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
 
 
@@ -97,7 +97,7 @@ namespace WallpaperEngineSlideShowServer
                 Init();
                 return config.GetValue<Boolean>("ApppSettings:Random-Background-Color");
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
 
 

@@ -795,10 +795,10 @@ $.extend( $.validator, {
 					}
 				} catch ( e ) {
 					if ( this.settings.debug && window.console ) {
-						console.log( "Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
+						console.log( "Exception ex occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
 					}
 					if ( e instanceof TypeError ) {
-						e.message += ".  Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.";
+						e.message += ".  Exception ex occurred when checking element " + element.id + ", check the '" + rule.method + "' method.";
 					}
 
 					throw e;
@@ -1197,7 +1197,7 @@ $.extend( $.validator, {
 			rules[ method ] = value;
 		} else if ( type === method && type !== "range" ) {
 
-			// Exception: the jquery validate 'range' method
+			// Exception ex: the jquery validate 'range' method
 			// does not test for the html5 'range' type
 			rules[ method ] = true;
 		}
