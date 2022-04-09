@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0-preview.2.22152.2" />
+    <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>

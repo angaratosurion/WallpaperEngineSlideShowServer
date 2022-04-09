@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cors;
+using SixLabors.ImageSharp;
 
 namespace WallpaperEngineSlideShowServer.Managers
 {
@@ -96,11 +97,8 @@ namespace WallpaperEngineSlideShowServer.Managers
                     Console.WriteLine(timgpath);
                     if (timgpath != null && File.Exists(timgpath))
                     {
-                        tap = this.ImageToBase64(timgpath);
-                        string fileext = Path.GetExtension(timgpath)
-;
-                        fileext=fileext.Replace(".", "");
-                        ap = String.Format("data:image/{0};base64,{1}",fileext,tap);
+                        ap = this.ImageToBase64(timgpath);
+                        
                     }
 
 
@@ -170,16 +168,16 @@ namespace WallpaperEngineSlideShowServer.Managers
         {
             String base64String = null;
 
-            using (System.Drawing.Image image = System.Drawing.Image.FromFile(path))
-            {
-                using (MemoryStream m = new MemoryStream())
-                {  
-                    image.Save(m, image.RawFormat);
-                    byte[] imageBytes = m.ToArray();
-                    base64String = Convert.ToBase64String(imageBytes);
+            Image image =  Image.Load(path);
+
+            
+                
+                    var imgformat=Image.DetectFormat(path);
+                base64String= image.ToBase64String(imgformat);
+                    
                     return base64String;
-                }
+               
             }
         }
     }
-}
+
