@@ -179,7 +179,7 @@ namespace WallpaperEngineSlideShowServer.Managers
                     if( directories!=null)
                     {
                         var   exif = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
-                        
+                       
                     }
                         
                 }
