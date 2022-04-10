@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using Microsoft.AspNetCore.Cors;
 using SixLabors.ImageSharp;
 
 namespace WallpaperEngineSlideShowServer.Managers
@@ -163,6 +165,32 @@ namespace WallpaperEngineSlideShowServer.Managers
                  Console.WriteLine(ex.ToString()); return null;
             }
 
+        }
+
+
+        public ExifIfd0Directory GetMetadata(string path)
+        {
+            try
+            {
+                ExifIfd0Directory ap = null; ;
+                if (path != null && File.Exists(path))
+                {
+                    List<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(path).ToList();
+                    if( directories!=null)
+                    {
+                        var   exif = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+                        
+                    }
+                        
+                }
+                return ap;
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return null;
+            }
         }
         public string ImageToBase64(string path)
         {
