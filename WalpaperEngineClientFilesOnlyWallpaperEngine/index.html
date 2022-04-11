@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+    <script src="./lib/jquery/dist/jquery.min.js"></script>
+    <link href="./css/site.css" rel="stylesheet">
+    <script>
+         
+ 						var seconds = 60 * 1000;
+      var wallpaperpath=""
+          window.wallpaperPropertyListener = 
+             {
+                  applyUserProperties: function(properties) 
+            {
+        									if (properties.interval)
+                          {
+                            seconds=interval.value*1000;
+                          }
+              					if(properties.WallpaperPath)
+                        {
+                          wallpaperpath=WallpaperPath.value;
+                        }
+            // Do something with yourproperty
+        															
+            }
+                   }
+         $(document).ready(function () {
+            
+             var bgcolor = "black";
+
+          
+             /*var jqxhr = $.get("https://localhost:5001/Wallpaper/GetInterval",
+                 function (response) {
+                     seconds = response * 1000;
+                     //alert(seconds);
+                 });*/
+            // changeimgandcackground();
+
+             //alert(seconds);
+             setInterval(function () {
+               window.wallpaperRequestRandomFileForProperty('WallpaperPath',  changeimgandcackground);
+                 //changeimgandcackground();
+
+
+
+
+
+             }, seconds);
+
+
+
+
+
+
+         });
+         function changeimgandcackground(propertyName, filePath) {
+           
+            $("img").attr("src", "file://"+filePath);
+             /*var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImage",
+            // var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImageData",
+                 function (response) {
+				
+                     
+                    // $("img").attr("src", response.base64String);
+                 $("img").attr("src", response.webUrl);
+              		 showexiinfo(response.exif);
+                 // $('#path').text(response.fileName);
+                  //fileName
+								$('#path').attr('href',response.fileName);
+
+                 });
+             var jqxhr2 = $.get("https://localhost:5001/Wallpaper/GetBackgroundColor",
+                 function (response) {
+                    
+
+                     document.body.style.backgroundColor = response;
+                     bgcolor = response;
+                 });*/
+         }
+     
+
+
+     </script>
+  </head>
+  <body class="body"> <img id="back" class="image">
+  </body>
+</html>
