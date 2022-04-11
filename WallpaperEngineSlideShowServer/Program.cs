@@ -1,3 +1,6 @@
+using Microsoft.Extensions.FileProviders;
+using WallpaperEngineSlideShowServer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,8 @@ var MyAllowSpecificOrigins = "_MyAllowSubdomainPolicy";
 
  
 builder.Services.AddControllersWithViews();
+builder.Services.AddDirectoryBrowser();
+
 
 var app = builder.Build();
 
@@ -29,5 +34,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Wallpaper}/{action=GetImages}/{id?}");
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(AppSettingsManager.GeWallPaperPath()),
+   RequestPath = "/wallpapers"
+});
 app.Run();

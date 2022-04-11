@@ -36,12 +36,13 @@
 
          });
          function changeimgandcackground() {
-
-             var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImageData",
+             var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImage",
+            // var jqxhr1 = $.get("https://localhost:5001/Wallpaper/GetImageData",
                  function (response) {
 				
                      
-                     $("img").attr("src", response.base64String);
+                    // $("img").attr("src", response.base64String);
+                 $("img").attr("src", response.webUrl);
               		 showexiinfo(response.exif);
                  // $('#path').text(response.fileName);
                   //fileName
@@ -91,7 +92,8 @@
 
      </script>
   </head>
-  <body class="body"> <!--<a id="path">Click To View Image</a><br>-->
+  <body class="body">
+    <!--<a id="path">Click To View Image</a><br>-->
     <div class="exifinfo">
       <table class="exifinfo" border="1">
         <tbody>

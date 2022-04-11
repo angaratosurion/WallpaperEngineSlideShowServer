@@ -39,9 +39,9 @@ namespace WallpaperEngineSlideShowServer.Controllers
         {
             try
             {
-                string ap = null;
-             
-                ap= wallpaperManager.GetImage();
+                ImageData ap = null;
+
+                ap = wallpaperManager.GetImage();
                 
 
                 return new OkObjectResult(ap);

@@ -53,11 +53,12 @@ namespace WallpaperEngineSlideShowServer.Managers
             }
         }
 
-        public string GetImage()
+        public ImageData GetImage()
         {
             try
             {
-                string ap = null;
+                ImageData ap = null;
+                string timgpath, tap = null; ;
                 int i = 0;
                 if ( Images== null)
                 {
@@ -72,7 +73,19 @@ namespace WallpaperEngineSlideShowServer.Managers
                     {
                         i = images.Count - 1;
                     }
-                    ap = images[i];
+                    timgpath = images[i];
+
+                    if (timgpath != null && File.Exists(timgpath))
+                    {
+                        tap = this.ImageToBase64(timgpath);
+                        ap = new ImageData();
+                        //ap.Base64String = tap;
+                        ap.FileName = timgpath;
+                        ap.Exif = this.GetMetadata(timgpath);
+                        ap.WebUrl = String.Format("https://localhost:5001/wallpapers/{0}",Path.GetFileName(ap.FileName));
+
+
+                    }
 
 
                 }
