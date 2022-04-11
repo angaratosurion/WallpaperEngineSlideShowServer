@@ -11,7 +11,7 @@ namespace WallpaperEngineSlideShowServer.Controllers
     {
         // GET: WallpaperController
 
-        WallpaperManager wallpaperManager = new WallpaperManager();
+        static WallpaperManager wallpaperManager = new WallpaperManager();
        
         public ActionResult GetImages()
         {
@@ -41,7 +41,7 @@ namespace WallpaperEngineSlideShowServer.Controllers
             {
                 string ap = null;
              
-                ap= this.wallpaperManager.GetImage();
+                ap= wallpaperManager.GetImage();
                 
 
                 return new OkObjectResult(ap);
@@ -58,7 +58,7 @@ namespace WallpaperEngineSlideShowServer.Controllers
             {
               ImageData ap = null;
                 int i = 0;
-              ap = this.wallpaperManager.GetImageData();
+              ap =wallpaperManager.GetImageData();
                
 
                 return new OkObjectResult(ap);

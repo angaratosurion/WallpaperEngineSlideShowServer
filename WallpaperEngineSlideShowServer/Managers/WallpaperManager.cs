@@ -93,12 +93,12 @@ namespace WallpaperEngineSlideShowServer.Managers
             {
                 ImageData ap = null;
                 int i = 0;
-                string timgpath,tap=null;
+                string timgpath, tap=null; ;
                 if ( Images== null)
                 {
                     Images= GetImages();
                 }
-                var images = GetImages();
+                var images = Images;
                 if (images != null)
                 {
                     Random random = new Random();
@@ -109,10 +109,10 @@ namespace WallpaperEngineSlideShowServer.Managers
                     }
                   timgpath = images[i];
                     
-                    Console.WriteLine(timgpath);
+                    
                     if (timgpath != null && File.Exists(timgpath))
                     {
-                        tap = this.ImageToBase64(timgpath);
+                      tap = this.ImageToBase64(timgpath);
                         ap = new ImageData();
                         ap.Base64String = tap;
                         ap.FileName=timgpath;
@@ -227,7 +227,10 @@ namespace WallpaperEngineSlideShowServer.Managers
 
 
 
+
+
                         }
+                        image.Dispose();
 
                     }
                 }
@@ -255,6 +258,7 @@ namespace WallpaperEngineSlideShowServer.Managers
 
                 var imgformat = Image.DetectFormat(path);
                 base64String = image.ToBase64String(imgformat);
+                image.Dispose();    
             }
                     
                     return base64String;
