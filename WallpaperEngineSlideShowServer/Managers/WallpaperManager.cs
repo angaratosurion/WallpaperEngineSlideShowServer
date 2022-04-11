@@ -1,5 +1,4 @@
-﻿using MetadataExtractor;
-using MetadataExtractor.Formats.Exif;
+﻿ 
 using Microsoft.AspNetCore.Cors;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
@@ -88,11 +87,11 @@ namespace WallpaperEngineSlideShowServer.Managers
 
 
         }
-        public string GetImageData()
+        public ImageData GetImageData()
         {
             try
             {
-                string ap = null;
+                ImageData ap = null;
                 int i = 0;
                 string timgpath,tap=null;
                 if ( Images== null)
@@ -113,7 +112,12 @@ namespace WallpaperEngineSlideShowServer.Managers
                     Console.WriteLine(timgpath);
                     if (timgpath != null && File.Exists(timgpath))
                     {
-                        ap = this.ImageToBase64(timgpath);
+                        tap = this.ImageToBase64(timgpath);
+                        ap = new ImageData();
+                        ap.Base64String = tap;
+                        ap.FileName=timgpath;
+                        ap.Exif = this.GetMetadata(timgpath);
+
                         
                     }
 
@@ -195,32 +199,31 @@ namespace WallpaperEngineSlideShowServer.Managers
                         if (exif != null)
                         {
                              ap= new ExifModel();
-                               var met= exif.GetValue(ExifTag.Acceleration);
-                            ap.Acceleration = this.RationalToString((int) exif.GetValue(ExifTag.Acceleration).Value.Numerator, 
-                                (int)exif.GetValue(ExifTag.Acceleration).Value.Denominator);
-                            ap.AmbientTemperature = this.RationalToString(exif.GetValue(ExifTag.AmbientTemperature).Value.Numerator,
-                                exif.GetValue(ExifTag.AmbientTemperature).Value.Denominator);
-                            ap.Exposure_Time= this.RationalToString((int)exif.GetValue(ExifTag.ExposureTime).Value
-                                .Numerator, (int)exif.GetValue(ExifTag.ExposureTime).Value.Denominator);
-                            ap.F_number=this.RationalToString((int)exif.GetValue(ExifTag.FNumber).Value.Numerator, 
-                                (int)exif.GetValue(ExifTag.FNumber).Value.Denominator) ;
-                            ap.Exposure_Program = exif.GetValue(ExifTag.ExposureProgram).Value;
-                            ap.Model=exif.GetValue(ExifTag.Model).Value;
-                            ap.Orientation= exif.GetValue(ExifTag.Orientation).Value;
-                            ap.Resolution_Unit= exif.GetValue(ExifTag.ResolutionUnit).Value;
-                            ap.X_resolution= exif.GetValue(ExifTag.XResolution).Value.ToDouble();
-                            ap.Y_resolution= exif.GetValue(ExifTag.YResolution).Value.ToDouble();
-                            ap.YCbCr_Positioning= exif.GetValue(ExifTag.YCbCrPositioning).Value;
-                           ap.DateTaken= exif.GetValue(ExifTag.DateTimeOriginal).Value;
-                            ap.Brightness= this.RationalToString(exif.GetValue(ExifTag.BrightnessValue).Value.Numerator,
-                                exif.GetValue(ExifTag.BrightnessValue).Value.Denominator);
-                            ap.GPSDateStamp= exif.GetValue(ExifTag.GPSDateStamp).Value;
-                            ap.GPSAltitude=RationalToString((int)exif.GetValue(ExifTag.GPSAltitude).Value.Numerator,
-                                (int)exif.GetValue(ExifTag.GPSAltitude).Value.Denominator);
-                            ap.GPSLongitude = RationalToArStringAR(exif.GetValue(ExifTag.GPSLongitude).Value);
-                            ap.GPSLatitude=RationalToArStringAR(exif.GetValue(ExifTag.GPSLatitude).Value);
-                            ap.ImageWidth = exif.GetValue(ExifTag.ImageWidth).Value.ToString();
-                            ap.ImageLength = exif.GetValue(ExifTag.ImageLength).Value.ToString();
+                              
+                            ap.Exposure_Time= this.RationalToString ( (IExifValue<Rational>)exif.GetValue(ExifTag.ExposureTime));
+                            ap.F_number = this.RationalToString(exif.GetValue(ExifTag.FNumber));
+                            if (exif.GetValue(ExifTag.ExposureProgram) != null)
+                                {
+                                ap.Exposure_Program = exif.GetValue(ExifTag.ExposureProgram).Value;
+                            }
+                            if (exif.GetValue(ExifTag.Model) != null)
+                            {
+                                ap.Model = exif.GetValue(ExifTag.Model).Value;
+                            }
+                            ap.Orientation= this.RationalToString(exif.GetValue(ExifTag.Orientation));
+                            ap.Resolution_Unit= this.RationalToString(exif.GetValue(ExifTag.ResolutionUnit));
+                            ap.X_resolution = RationalToDouble(exif.GetValue(ExifTag.XResolution));
+                            ap.Y_resolution= RationalToDouble(exif.GetValue(ExifTag.YResolution));
+                            ap.YCbCr_Positioning = this.RationalToString(exif.GetValue(ExifTag.YCbCrPositioning));
+                           ap.DateTaken= CheckifStringValueisNull(exif.GetValue(ExifTag.DateTimeOriginal));
+                            ap.Brightness= this.RationalToString(exif.GetValue(ExifTag.BrightnessValue));
+                            ap.GPSDateStamp = CheckifStringValueisNull(exif.GetValue(ExifTag.GPSDateStamp));
+                            ap.GPSAltitude=RationalToString(exif.GetValue(ExifTag.GPSAltitude));
+                            ap.GPSLongitude = RationalToArStringAR(exif.GetValue(ExifTag.GPSLongitude));
+                            ap.GPSLatitude=RationalToArStringAR(exif.GetValue(ExifTag.GPSLatitude));
+                            ap.ImageWidth = this.RationalToString(exif.GetValue(ExifTag.ImageWidth));
+                            ap.ImageLength = this.RationalToString(exif.GetValue(ExifTag.ImageLength));
+                         
 
 
 
@@ -237,6 +240,10 @@ namespace WallpaperEngineSlideShowServer.Managers
                 Console.WriteLine(ex.ToString()); return null;
             }
         }
+
+       
+
+
         public string ImageToBase64(string path)
         {
             String base64String = null;
@@ -251,22 +258,145 @@ namespace WallpaperEngineSlideShowServer.Managers
             }
                     
                     return base64String;
-               
-            }
-        public string RationalToString(int numerator,int denominator)
+
+        }
+
+       private string RationalToString(int numerator, int denominator)
         {
             try
-            { 
+            {
                 return String.Format("{0}/{1}", numerator, denominator);
 
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.ToString()); return null;
+                Console.WriteLine(ex.ToString()); return "";
             }
         }
-        public string RationalToArStringAR(SixLabors.ImageSharp.Rational[] rationals)
+        public string RationalToString(IExifValue<Number> exif)
+        {
+            try
+            {
+                string num = "";
+                if (exif != null)
+                {
+
+                    num = exif.Value.ToString();
+
+                }
+                return String.Format("{0}", num);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return "";
+            }
+        }
+        public string CheckifStringValueisNull(IExifValue<string> exif)
+        {
+            try
+            {
+               string num="";
+                if (exif != null)
+                {
+
+                    num = exif.Value;
+
+                }
+                return String.Format("{0}", num);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return "";
+            }
+        }
+        public string RationalToString(IExifValue<ushort> exif)
+        {
+            try
+            {
+                string num = "";
+                if (exif != null)
+                {
+
+                    num = exif.Value.ToString();
+
+                }
+                return String.Format("{0}", num);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return "";
+            }
+        }
+        public string RationalToString(IExifValue<Rational> exif)
+         {
+            try
+            {
+                int numerator= 0, denominator = 0;
+                if (exif != null)
+                {
+                    numerator = (int)exif.Value.Numerator;
+                    denominator = (int)exif.Value.Denominator;
+
+
+                }
+                return String.Format("{0}/{1}", numerator, denominator);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return "";
+            }
+        }
+        public double RationalToDouble(IExifValue<Rational> exif)
+        {
+            try
+            {
+               double num = 0;
+                if (exif != null)
+                {
+                    num=exif.Value.ToDouble();
+
+
+                }
+                return num;
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return -1;
+            }
+        }
+        public string RationalToString(IExifValue<SignedRational> exif)
+        {
+            try
+            {
+                int numerator = 0, denominator = 0;
+                if (exif != null)
+                {
+                    numerator = (int)exif.Value.Numerator;
+                    denominator = (int)exif.Value.Denominator;
+
+
+                }
+                return String.Format("{0}/{1}", numerator, denominator);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString()); return "";
+            }
+        }
+        public string RationalToArStringAR(IExifValue<Rational[]>rationals)
         {
             try
             {
@@ -274,9 +404,12 @@ namespace WallpaperEngineSlideShowServer.Managers
 
                 if( rationals != null )
                 {
-                    foreach( SixLabors.ImageSharp.Rational r in rationals )
+                    
+                    
+                    foreach (var r in rationals.Value)
                     {
-                        ap += " "+ this.RationalToString((int)r.Numerator, (int)r.Denominator);
+
+                        ap += " " + this.RationalToString((int)r.Numerator, (int)r.Denominator);
                     }
                 }
 
@@ -292,10 +425,7 @@ namespace WallpaperEngineSlideShowServer.Managers
             }
         }
 
-        private void RationalToString(int numerator, uint denominator)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
  
 

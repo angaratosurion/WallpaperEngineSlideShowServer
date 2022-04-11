@@ -23,9 +23,12 @@ namespace WallpaperEngineSlideShowServer.Win
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            
+            this.Text=String.Format("{0} - {1} ",Application.ProductName,Application.ProductVersion);
             this.Hide();
             this.WindowState = FormWindowState.Minimized;
             this.notifyIcon1.Icon = this.Icon;
+            this.notifyIcon1.Text = this.Text;
             
 
         }

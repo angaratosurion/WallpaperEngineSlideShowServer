@@ -17,17 +17,17 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 
-[assembly: Guid("b641abe5-d3d5-4959-8082-371693e9a2d2")]
+//[assembly: Guid("b641abe5-d3d5-4959-8082-371693e9a2d2")]
 
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WallpaperEngineSlideShowServer")]
+[assembly: AssemblyTitle("WallpaperEngineSlideShowServer.Win")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WallpaperEngineSlideShowServer")]
+[assembly: AssemblyProduct("WallpaperEngineSlideShowServer.Win")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WallpaperEngineSlideShowServer.Managers;
+using WallpaperEngineSlideShowServer.Models;
 
 namespace WallpaperEngineSlideShowServer.Controllers
 {
@@ -18,7 +19,7 @@ namespace WallpaperEngineSlideShowServer.Controllers
             try
             {
                 List<string> images = new List<string>();
-                images=wallpaperManager.GetImages();
+                images=WallpaperManager.GetImages();
 
                 return new OkObjectResult(images);
                 
@@ -55,7 +56,7 @@ namespace WallpaperEngineSlideShowServer.Controllers
         {
             try
             {
-                string ap = null;
+              ImageData ap = null;
                 int i = 0;
               ap = this.wallpaperManager.GetImageData();
                

@@ -1,12 +1,11 @@
 <html>
-<head>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
-   <script src="./lib/jquery/dist/jquery.min.js"></script>
-   
-   <link href="./css/site.css" rel="stylesheet">
-	
-     <script >
+    <script src="./lib/jquery/dist/jquery.min.js"></script>
+    <link href="./css/site.css" rel="stylesheet">
+    <script>
          
 
          $(document).ready(function () {
@@ -42,8 +41,11 @@
                  function (response) {
 				
                      
-                     $("img").attr("src", response);
-
+                     $("img").attr("src", response.base64String);
+              		 showexiinfo(response.exif);
+                 // $('#path').text(response.fileName);
+                  //fileName
+								$('#path').attr('href',response.fileName);
 
                  });
              var jqxhr2 = $.get("https://localhost:5001/Wallpaper/GetBackgroundColor",
@@ -54,16 +56,196 @@
                      bgcolor = response;
                  });
          }
+       function showexiinfo( exif) 
+      {
+        //var exif = jQuery.parseJSON(jsonexif);
+          
+          
+      
+         $('#Manufacturer').text(exif.manufacturer);
+         $("#Model").text(exif.model);
+         $("#Orientation").text(exif.orientation);
+         $("#Orientation_Rotation").text(exif.orientation_Rotation);
+         $("#X_resolution").text(exif.x_resolution);
+         $("#Y_resolution").text(exif.y_resolution);
+         $("#Resolution_Unit").text(exif.resolution_Unit);
+         $("#Exposure_Time").text(exif.exposure_Time);
+          $("#F_number").text(exif.f_number);
+          $("#Exposure_Program").text(exif.exposure_Program);
+          $("#YCbCr_Positioning").text(exif.yCbCr_Positioning);
+          $("#DateTaken").text(exif.dateTaken);
+         $("#Brightness").text(exif.brightness);
+         $("#GPSDateStamp").text(exif.gPSDateStamp);
+         $("#GPSAltitude").text(exif.gPSAltitude);
+         $("#GPSLatitude").text(exif.gPSLatitude);
+         $("#ImageWidth").text(exif.imageWidth);
+         $("#ImageLength").text(exif.imageLength);
+         $("#Aperture").text(exif.aperture);
+         
+       
+         
+         
+         
+       }
 
 
      </script>
- 
-    
-</head>
-<body class="body">
-    
+  </head>
+  <body class="body"> <!--<a id="path">Click To View Image</a><br>-->
+    <div class="exifinfo">
+      <table class="exifinfo" border="1">
+        <tbody>
+          <tr>
+            <td>Manufacturer <br>
+            </td>
+            <td>
+              <p id="Manufacturer"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Model<br>
+            </td>
+            <td>
+              <p id="Model"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Orientation<br>
+            </td>
+            <td>
+              <p id="Orientation"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Orientation Rotation <br>
+            </td>
+            <td>
+              <p id="Orientation_Rotation"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>X resolution<br>
+            </td>
+            <td>
+              <p id="X_resolution"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Y resolution<br>
+            </td>
+            <td>
+              <p id="Y_resolution"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Resolution Unit<br>
+            </td>
+            <td>
+              <p id="Resolution_Unit"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Exposure Time</td>
+            <td>
+              <p id="Exposure_Time"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>F number</td>
+            <td>
+              <p id="F_number"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Exposure Program </td>
+            <td>
+              <p id="Exposure_Program"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>YCbCr Positioning </td>
+            <td>
+              <p id="YCbCr_Positioning"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>DateTaken</td>
+            <td>
+              <p id="DateTaken"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Brightness</td>
+            <td>
+              <p id="Brightness"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>GPS Date Stamp </td>
+            <td>
+              <p id="GPSDateStamp"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>GPSAltitude</td>
+            <td>
+              <p id="GPSAltitude"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>GPSLatitude</td>
+            <td>
+              <p id="GPSLatitude"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>GPSLongitude</td>
+            <td>
+              <p id="GPSLongitude"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>ImageWidth</td>
+            <td>
+              <p id="ImageWidth"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>ImageLength</td>
+            <td>
+              <p id="ImageLength"></p>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>Aperture</td>
+            <td>
+              <p id="Aperture"></p>
+              <br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <img id="back" class="image">
-<!--   <img id="back" class="img-fluid">-->
-</body>
-
+    
+  </body>
 </html>
