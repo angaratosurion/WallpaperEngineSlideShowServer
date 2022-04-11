@@ -7,16 +7,29 @@
     <link href="./css/site.css" rel="stylesheet">
     <script>
          
-
+ 						var seconds = 60 * 1000;
+          window.wallpaperPropertyListener = 
+             {
+                  applyUserProperties: function(properties) 
+            {
+        									if (properties.interval)
+                          {
+                            seconds=interval.value*1000;
+                          }
+            // Do something with yourproperty
+        															
+            }
+                   }
          $(document).ready(function () {
-             var seconds = 60 * 100;
+            
              var bgcolor = "black";
 
-             var jqxhr = $.get("https://localhost:5001/Wallpaper/GetInterval",
+          
+             /*var jqxhr = $.get("https://localhost:5001/Wallpaper/GetInterval",
                  function (response) {
                      seconds = response * 1000;
                      //alert(seconds);
-                 });
+                 });*/
              changeimgandcackground();
 
              //alert(seconds);
